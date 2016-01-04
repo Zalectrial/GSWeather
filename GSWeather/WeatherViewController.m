@@ -17,7 +17,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:0.38 green:0.52 blue:0.92 alpha:1];
+    //Gradient Color
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.view.bounds;
+    gradient.colors = @[(id)[[UIColor colorWithRed:0.49 green:0.93 blue:0.73 alpha:1] CGColor], (id)[[UIColor colorWithRed:0.38 green:0.52 blue:0.92 alpha:1] CGColor]];
+    [self.view.layer insertSublayer:gradient atIndex:0];
     
     // Title Label
     UILabel *titleLabel = [[UILabel alloc] init];
