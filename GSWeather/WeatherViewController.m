@@ -7,6 +7,8 @@
 //
 
 #import "WeatherViewController.h"
+#import "UIColor+Extended.h"
+#import "UIFont+Extended.h"
 
 @interface WeatherViewController ()     <UITableViewDelegate, UITableViewDataSource>
 
@@ -20,13 +22,13 @@
     //Gradient Color
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.view.bounds;
-    gradient.colors = @[(id)[[UIColor colorWithRed:0.49 green:0.93 blue:0.73 alpha:1] CGColor], (id)[[UIColor colorWithRed:0.38 green:0.52 blue:0.92 alpha:1] CGColor]];
+    gradient.colors = @[(id)[[UIColor topColor] CGColor], (id)[[UIColor bottomColor] CGColor]];
     [self.view.layer insertSublayer:gradient atIndex:0];
     
     // Title Label
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.font = [UIFont systemFontOfSize:22];
+    titleLabel.font = [UIFont screenTitleFont];
     titleLabel.text = @"Melbourne, AU";
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:titleLabel];
@@ -40,16 +42,16 @@
     
     //Temperature Label
     UILabel *temperatureLabel = [[UILabel alloc] init];
-    temperatureLabel.textColor = [UIColor colorWithRed:0.62 green:0.98 blue:0.99 alpha:1];
-    temperatureLabel.font = [UIFont systemFontOfSize:65 weight:UIFontWeightUltraLight];
+    temperatureLabel.textColor = [UIColor textColor];
+    temperatureLabel.font = [UIFont bigTitleFont];
     temperatureLabel.text = @"17.6°";
     temperatureLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:temperatureLabel];
     
     //Weather Type Label
     UILabel *weatherTypeLabel = [[UILabel alloc] init];
-    weatherTypeLabel.textColor = [UIColor colorWithRed:0.62 green:0.98 blue:0.99 alpha:1];
-    weatherTypeLabel.font = [UIFont systemFontOfSize:22 weight:UIFontWeightLight];
+    weatherTypeLabel.textColor = [UIColor textColor];
+    weatherTypeLabel.font = [UIFont smallTitleFont];
     weatherTypeLabel.text = @"Clear Day";
     weatherTypeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:weatherTypeLabel];
@@ -57,7 +59,7 @@
     //Weather Min/Max Label
     UILabel *weatherMinMax = [[UILabel alloc] init];
     weatherMinMax.textColor = [UIColor whiteColor];
-    weatherMinMax.font = [UIFont systemFontOfSize:22 weight:UIFontWeightLight];
+    weatherMinMax.font = [UIFont smallTitleFont];
     weatherMinMax.text = @"15°/24°";
     weatherMinMax.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:weatherMinMax];
@@ -65,7 +67,7 @@
     //Weather Date Label
     UILabel *weatherDate = [[UILabel alloc] init];
     weatherDate.textColor = [UIColor whiteColor];
-    weatherDate.font = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
+    weatherDate.font = [UIFont bodyFont];
     weatherDate.text = @"Mon, 4 Jan";
     weatherDate.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:weatherDate];
@@ -78,37 +80,41 @@
     [self.view addSubview:weatherTable];
     weatherTable.backgroundColor = [UIColor clearColor];
     
-    // Title Label
-    [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0].active = YES;
-    [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:20].active = YES;
+    [NSLayoutConstraint activateConstraints:@[
+                                              
+        // Title Label
+        [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0],
+        [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:20],
+        
+        // Weather Image
+        [NSLayoutConstraint constraintWithItem:weatherImage attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0],
+        [NSLayoutConstraint constraintWithItem:weatherImage attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:titleLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:20],
+        [NSLayoutConstraint constraintWithItem:weatherImage attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0],
+        [NSLayoutConstraint constraintWithItem:weatherImage attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:temperatureLabel attribute:NSLayoutAttributeTop multiplier:1.0 constant:-20],
+        
+        //Temperature Label
+        [NSLayoutConstraint constraintWithItem:temperatureLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0],
+        [NSLayoutConstraint constraintWithItem:temperatureLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:-30],
+        
+        //Weather Type Label
+        [NSLayoutConstraint constraintWithItem:weatherTypeLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:temperatureLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:10],
+        [NSLayoutConstraint constraintWithItem:weatherTypeLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:25],
+        
+        //Weather Min/Max Label
+        [NSLayoutConstraint constraintWithItem:weatherMinMax attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:temperatureLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:10],
+        [NSLayoutConstraint constraintWithItem:weatherMinMax attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:-30],
+        
+        //Weather Date Label
+        [NSLayoutConstraint constraintWithItem:weatherDate attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:weatherMinMax attribute:NSLayoutAttributeBottom multiplier:1.0 constant:5],
+        [NSLayoutConstraint constraintWithItem:weatherDate attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:-30],
+        
+        //Weather Table View
+        [NSLayoutConstraint constraintWithItem:weatherTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:weatherDate attribute:NSLayoutAttributeBottom multiplier:1.0 constant:10],
+        [NSLayoutConstraint constraintWithItem:weatherTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0],
+        [NSLayoutConstraint constraintWithItem:weatherTable attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0],
+        [NSLayoutConstraint constraintWithItem:weatherTable attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0],
     
-    // Weather Image
-    [NSLayoutConstraint constraintWithItem:weatherImage attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0].active = YES;
-    [NSLayoutConstraint constraintWithItem:weatherImage attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:titleLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:20].active = YES;
-    [NSLayoutConstraint constraintWithItem:weatherImage attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0].active = YES;
-    [NSLayoutConstraint constraintWithItem:weatherImage attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:temperatureLabel attribute:NSLayoutAttributeTop multiplier:1.0 constant:-20].active = YES;
-    
-    //Temperature Label
-    [NSLayoutConstraint constraintWithItem:temperatureLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0].active = YES;
-    [NSLayoutConstraint constraintWithItem:temperatureLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:-30].active = YES;
-    
-    //Weather Type Label
-    [NSLayoutConstraint constraintWithItem:weatherTypeLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:temperatureLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:10].active = YES;
-    [NSLayoutConstraint constraintWithItem:weatherTypeLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:25].active = YES;
-    
-    //Weather Min/Max Label
-    [NSLayoutConstraint constraintWithItem:weatherMinMax attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:temperatureLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:10].active = YES;
-    [NSLayoutConstraint constraintWithItem:weatherMinMax attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:-30].active = YES;
-    
-    //Weather Date Label
-    [NSLayoutConstraint constraintWithItem:weatherDate attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:weatherMinMax attribute:NSLayoutAttributeBottom multiplier:1.0 constant:5].active = YES;
-    [NSLayoutConstraint constraintWithItem:weatherDate attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:-30].active = YES;
-    
-    //Weather Table View
-    [NSLayoutConstraint constraintWithItem:weatherTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:weatherDate attribute:NSLayoutAttributeBottom multiplier:1.0 constant:10].active = YES;
-    [NSLayoutConstraint constraintWithItem:weatherTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0].active = YES;
-    [NSLayoutConstraint constraintWithItem:weatherTable attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0].active = YES;
-    [NSLayoutConstraint constraintWithItem:weatherTable attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0].active = YES;
+    ]];
     
 }
 
@@ -122,10 +128,10 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"ReuseIdentifier"];
     cell.textLabel.text = @"Mon";
     cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightThin];
+    cell.textLabel.font = [UIFont cellFont];
     cell.detailTextLabel.text = @"15°/24°";
     cell.detailTextLabel.textColor = [UIColor whiteColor];
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightThin];
+    cell.detailTextLabel.font = [UIFont cellFont];
     cell.backgroundColor = [UIColor clearColor];
     cell.imageView.image = [UIImage imageNamed:@"clear-night-small"];
     return cell;

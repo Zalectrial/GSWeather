@@ -12,6 +12,8 @@
 		444A25B21C39EC7D00BEC962 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 444A25B11C39EC7D00BEC962 /* Assets.xcassets */; };
 		444A25B51C39EC7D00BEC962 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 444A25B31C39EC7D00BEC962 /* LaunchScreen.storyboard */; };
 		444A25BE1C39ECAB00BEC962 /* WeatherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 444A25BD1C39ECAB00BEC962 /* WeatherViewController.m */; };
+		444A25C31C3A28BD00BEC962 /* UIColor+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 444A25C21C3A28BD00BEC962 /* UIColor+Extended.m */; };
+		444A25C71C3A2B1C00BEC962 /* UIFont+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 444A25C61C3A2B1C00BEC962 /* UIFont+Extended.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,10 @@
 		444A25B61C39EC7D00BEC962 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		444A25BC1C39ECAB00BEC962 /* WeatherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherViewController.h; sourceTree = "<group>"; };
 		444A25BD1C39ECAB00BEC962 /* WeatherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherViewController.m; sourceTree = "<group>"; };
+		444A25C11C3A28BD00BEC962 /* UIColor+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extended.h"; sourceTree = "<group>"; };
+		444A25C21C3A28BD00BEC962 /* UIColor+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extended.m"; sourceTree = "<group>"; };
+		444A25C51C3A2B1C00BEC962 /* UIFont+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Extended.h"; sourceTree = "<group>"; };
+		444A25C61C3A2B1C00BEC962 /* UIFont+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Extended.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +64,9 @@
 			children = (
 				444A25AE1C39EC7D00BEC962 /* AppDelegate.h */,
 				444A25AF1C39EC7D00BEC962 /* AppDelegate.m */,
-				444A25BC1C39ECAB00BEC962 /* WeatherViewController.h */,
-				444A25BD1C39ECAB00BEC962 /* WeatherViewController.m */,
-				444A25B11C39EC7D00BEC962 /* Assets.xcassets */,
-				444A25B31C39EC7D00BEC962 /* LaunchScreen.storyboard */,
-				444A25B61C39EC7D00BEC962 /* Info.plist */,
+				444A25C41C3A28DE00BEC962 /* Utilities */,
+				444A25C01C3A274500BEC962 /* Screens */,
+				444A25BF1C3A26B600BEC962 /* Resources */,
 				444A25AB1C39EC7D00BEC962 /* Supporting Files */,
 			);
 			path = GSWeather;
@@ -71,9 +75,39 @@
 		444A25AB1C39EC7D00BEC962 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				444A25B61C39EC7D00BEC962 /* Info.plist */,
 				444A25AC1C39EC7D00BEC962 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		444A25BF1C3A26B600BEC962 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				444A25B11C39EC7D00BEC962 /* Assets.xcassets */,
+				444A25B31C39EC7D00BEC962 /* LaunchScreen.storyboard */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		444A25C01C3A274500BEC962 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				444A25BC1C39ECAB00BEC962 /* WeatherViewController.h */,
+				444A25BD1C39ECAB00BEC962 /* WeatherViewController.m */,
+			);
+			name = Screens;
+			sourceTree = "<group>";
+		};
+		444A25C41C3A28DE00BEC962 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				444A25C11C3A28BD00BEC962 /* UIColor+Extended.h */,
+				444A25C21C3A28BD00BEC962 /* UIColor+Extended.m */,
+				444A25C51C3A2B1C00BEC962 /* UIFont+Extended.h */,
+				444A25C61C3A2B1C00BEC962 /* UIFont+Extended.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +181,8 @@
 			files = (
 				444A25B01C39EC7D00BEC962 /* AppDelegate.m in Sources */,
 				444A25BE1C39ECAB00BEC962 /* WeatherViewController.m in Sources */,
+				444A25C71C3A2B1C00BEC962 /* UIFont+Extended.m in Sources */,
+				444A25C31C3A28BD00BEC962 /* UIColor+Extended.m in Sources */,
 				444A25AD1C39EC7D00BEC962 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +322,7 @@
 				444A25BB1C39EC7D00BEC962 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
